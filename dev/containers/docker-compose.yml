@@ -25,6 +25,15 @@ services:
     ports:
       - "3001:8080"
 
+  opensearch:
+    image: opensearchproject/opensearch:2.18.0
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data
+    environment:
+      OPENSEARCH_INITIAL_ADMIN_PASSWORD: 'c3o_ZPHo!'
+      discovery.type: single-node
+      plugins.security.disabled: 'true'
+
   # solr:
   #   container_name: wiki-solr
   #   image: solr:7-alpine
@@ -56,4 +65,5 @@ services:
 
 volumes:
   db-data:
+  opensearch-data:
   # solr-data:

@@ -1,3 +1,39 @@
+# Wikijs
+
+## dev
+```
+cd dev/container
+docker compose up -d
+docker compose exec wiki bash
+  yarn install
+  yarn run start # dose not update automaticly
+
+  exit
+
+# cleanup
+docker compose down --volumes
+```
+
+## build
+```
+TAG=2.5.312-0mw1rc2 # set currect tag
+
+git tag v$TAG
+
+mv package.json pkg-temp.json
+jq --arg vs "$TAG" -r '. + {dev:false, version:$vs}' pkg-temp.json > package.json
+rm pkg-temp.json
+
+docker build -f dev/build/Dockerfile -t registry.rz1.metaways.net/devops/wikijs:$TAG .
+
+docker push registry.rz1.metaways.net/devops/wikijs:$TAG
+
+git co HEAD -- package.json
+
+```
+
+# Original Readme
+
 <div align="center">
 
 <picture>
